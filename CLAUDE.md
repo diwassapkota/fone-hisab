@@ -19,12 +19,35 @@ Both apps share common packages for UI components, business logic, and services,
 fone-hisab/
 ├── apps/
 │   ├── merchant_app/          # Merchant-facing Flutter app
-│   └── customer_app/           # Customer-facing Flutter app
+│   │   ├── features/
+│   │   │   ├── auth/          # Login, Register, OTP
+│   │   │   ├── calculator/    # Quick calculator
+│   │   │   ├── customers/     # Customer CRUD, list, detail
+│   │   │   ├── dashboard/     # Home, summary, analytics
+│   │   │   ├── payments/      # Payment entry
+│   │   │   ├── sales/         # Sales entry with line items
+│   │   │   ├── suppliers/     # Supplier management (NEW)
+│   │   │   ├── products/      # Inventory management (NEW)
+│   │   │   ├── purchases/     # Purchase management (NEW)
+│   │   │   ├── reports/       # Reports generation
+│   │   │   └── settings/      # Settings & preferences
+│   │   ├── config/            # App-level providers
+│   │   └── routes/            # GoRouter configuration
+│   └── customer_app/           # Customer-facing Flutter app (minimal)
 ├── packages/
 │   ├── core/                   # Design system, theme, constants, localization
+│   │   ├── constants/         # Colors, typography
+│   │   ├── theme/             # Material 3 theme
+│   │   └── l10n/              # English & Nepali localization
 │   ├── shared_ui/              # Reusable UI components
+│   │   └── widgets/           # LineItemsInput, LineItemsDisplay, etc.
 │   ├── shared_models/          # Data models (DTOs, entities)
+│   │   ├── models/            # Customer, Supplier, Product, Purchase, Transaction
+│   │   └── enums/             # Status, filters, sort options
 │   └── shared_services/        # API clients, repositories, utilities
+│       ├── api/               # Service classes for API calls
+│       ├── config/            # API configuration & endpoints
+│       └── interceptors/      # Auth & logging interceptors
 ├── melos.yaml                  # Monorepo configuration
 └── pubspec.yaml                # Workspace dependencies
 ```
@@ -172,21 +195,24 @@ flutter test integration_test/
 
 ## Key Features by Phase
 
-### Phase 1: Core Sales & Ledger (Priority)
+### Phase 1: Core Sales & Ledger (✅ COMPLETED)
 
 **Merchant App:**
-- Sales entry with cash/credit/advance logic
-- Customer management with contact integration
-- Customer list with filters (All/Udharo/Advance)
-- Customer detail page with transaction history
-- Basic ledger tracking
+- ✅ Sales entry with cash/credit/advance logic
+- ✅ Sales entry with line items (itemized transactions)
+- ✅ Customer management with contact integration
+- ✅ Customer list with filters (All/Udharo/Advance)
+- ✅ Customer detail page with transaction history
+- ✅ Basic ledger tracking
+- ✅ Quick calculator for sales
+- ✅ Payment entry
 
 **Customer App:**
 - View merchant ledgers (read-only)
 - View outstanding balances
 - Transaction history viewing
 
-### Phase 2: Reports & Notifications
+### Phase 2: Reports & Notifications (🚧 IN PROGRESS)
 
 **Merchant App:**
 - Generate customer reports (PDF/Excel)
@@ -199,7 +225,7 @@ flutter test integration_test/
 - Payment due notifications
 - Notification settings
 
-### Phase 3: Disputes & Advanced Features
+### Phase 3: Disputes & Advanced Features (⏳ PLANNED)
 
 **Merchant App:**
 - Handle dispute notifications
@@ -213,6 +239,40 @@ flutter test integration_test/
 - View bill images
 - Dispute tracking
 - Advanced search
+
+### Phase 4: Supplier, Inventory & Purchase Management (🚧 IN PROGRESS)
+
+**Merchant App - Supplier Management:**
+- ✅ Backend API ready
+- 🔄 Supplier CRUD operations
+- 🔄 Supplier list with filters (All/Payable/Advance/Settled)
+- 🔄 Supplier detail page with purchase history
+- 🔄 Supplier ledger tracking
+- 🔄 Due date management for payments
+
+**Merchant App - Inventory Management:**
+- ✅ Backend API ready
+- 🔄 Product catalog with categories
+- 🔄 Stock tracking (quantity, low stock alerts)
+- 🔄 Barcode/SKU support
+- 🔄 Cost price vs selling price tracking
+- 🔄 Manual stock adjustments
+- 🔄 Stock movement history
+- 🔄 Low stock notifications
+
+**Merchant App - Purchase Management:**
+- ✅ Backend API ready
+- 🔄 Purchase entry with itemized products
+- 🔄 Automatic stock updates on purchase
+- 🔄 Supplier payment recording
+- 🔄 Purchase history and reports
+- 🔄 Supplier ledger (purchase vs payments)
+
+**Integration:**
+- 🔄 Sales with inventory integration (auto stock deduction)
+- 🔄 Dashboard analytics (inventory value, supplier payables)
+- 🔄 Reorder suggestions based on low stock
+- 🔄 Reports (inventory valuation, purchase history, stock movements)
 
 ## Business Logic Rules
 
@@ -245,6 +305,57 @@ if (saleAmount > paymentAmount) {
 - Bill date can be today or past dates
 - Future dates are NOT allowed
 - Date range filters available: Today, Yesterday, Last 7 Days, This Month, Last Month, Custom Range
+
+### Supplier & Purchase Business Logic
+
+**Supplier Balance Logic:**
+- Purchase increases supplier balance (we owe them - payable)
+- Payment decreases supplier balance (we paid them)
+- Positive balance = We owe supplier (PAYABLE)
+- Negative balance = Supplier owes us (ADVANCE)
+- Zero balance = SETTLED
+
+**Purchase Entry Rules:**
+- Must select supplier
+- Purchase with items: Auto-updates stock for tracked products
+- Stock calculation: Current Stock + Purchase Quantity
+- Cost price recalculation: Weighted average method
+- Payment amount can be 0 (full credit), partial, or full
+
+**Supplier Deletion Rules:**
+- Supplier can only be deleted when balance = 0
+- System prompts to clear outstanding balance first
+- Similar to customer deletion logic
+
+### Inventory Business Logic
+
+**Stock Status:**
+- `IN_STOCK`: Quantity > Min Stock Level
+- `LOW_STOCK`: 0 < Quantity <= Min Stock Level
+- `OUT_OF_STOCK`: Quantity = 0
+- `NOT_TRACKED`: trackInventory = false
+
+**Stock Movement Tracking:**
+- **PURCHASE**: Stock increase from supplier purchase
+- **SALE**: Stock decrease from customer sale
+- **ADJUSTMENT_IN**: Manual stock addition
+- **ADJUSTMENT_OUT**: Manual stock reduction (damage, theft, etc.)
+
+**Sales with Inventory:**
+- If product has `trackInventory = true`, check stock availability
+- If insufficient stock, show error and prevent sale
+- On successful sale, automatically deduct stock
+- Can mix tracked products and ad-hoc items in same transaction
+
+**Cost Price Calculation:**
+- Uses weighted average method on purchases
+- Formula: `(OldCost × OldQty + NewCost × NewQty) / (OldQty + NewQty)`
+- Maintains accurate cost basis for profit calculations
+
+**Reorder Logic:**
+- Product flagged for reorder when: `currentStock <= minStockLevel`
+- Suggested order quantity: `(minStockLevel × 2) - currentStock`
+- Analytics endpoint provides reorder suggestions
 
 ## Navigation Structure
 
@@ -375,12 +486,109 @@ footer (optional)
 
 Types: feat, fix, docs, style, refactor, test, chore
 
+## Implementation Patterns for Supplier/Inventory Features
+
+### Model Pattern (Freezed + JSON)
+```dart
+// Example: packages/shared_models/lib/models/supplier.dart
+@freezed
+class Supplier with _$Supplier {
+  const factory Supplier({
+    required String id,
+    required String supplierName,
+    required String mobileNumber,
+    @Default(0.0) double balance,
+    required String balanceType, // PAYABLE, ADVANCE, SETTLED
+    // ... other fields
+  }) = _Supplier;
+
+  factory Supplier.fromJson(Map<String, dynamic> json) =>
+      _$SupplierFromJson(json);
+}
+```
+
+### Service Pattern (Dio-based)
+```dart
+// Example: packages/shared_services/lib/api/supplier_service.dart
+class SupplierService {
+  final DioClient _dioClient;
+
+  SupplierService(this._dioClient);
+
+  Future<ApiResponse<List<Supplier>>> getSuppliers({
+    int page = 0,
+    String filter = 'ALL',
+    String? search,
+  }) async {
+    final response = await _dioClient.get(
+      ApiConfig.suppliers,
+      queryParameters: {'page': page, 'filter': filter, 'search': search},
+    );
+    return ApiResponse.fromJson(response.data, /* ... */);
+  }
+}
+```
+
+### Provider Pattern (Riverpod)
+```dart
+// Example: apps/merchant_app/lib/features/suppliers/providers/supplier_providers.dart
+final supplierServiceProvider = Provider<SupplierService>((ref) {
+  final dioClient = ref.watch(dioClientProvider);
+  return SupplierService(dioClient);
+});
+
+final supplierFilterProvider = StateProvider<String>((ref) => 'ALL');
+
+final suppliersProvider = FutureProvider.autoDispose<List<Supplier>>((ref) async {
+  final service = ref.watch(supplierServiceProvider);
+  final filter = ref.watch(supplierFilterProvider);
+  final response = await service.getSuppliers(filter: filter);
+  return response.data ?? [];
+});
+```
+
+### Screen Pattern (Feature-based)
+```dart
+// Example: apps/merchant_app/lib/features/suppliers/screens/supplier_list_screen.dart
+class SupplierListScreen extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final suppliersAsync = ref.watch(suppliersProvider);
+
+    return Scaffold(
+      appBar: AppBar(/* ... */),
+      body: suppliersAsync.when(
+        data: (suppliers) => ListView.builder(/* ... */),
+        loading: () => CircularProgressIndicator(),
+        error: (err, stack) => ErrorWidget(/* ... */),
+      ),
+    );
+  }
+}
+```
+
+### Reusable Widgets
+- Line items: Already implemented in `packages/shared_ui/lib/widgets/line_items_input.dart`
+- Can be reused for both sales and purchases
+- Pattern: Pass items list and onChange callback
+
+### Code Generation
+After creating/modifying models:
+```bash
+cd packages/shared_models
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
 ## Additional Resources
 
 - BRD Document: `/Users/diwassapkota/Downloads/BRD_KhataBook.docx`
 - Design Reference: `/Users/diwassapkota/Downloads/khatabook_dash.html`
+- API Specification: `COMPLETE_API_SPECIFICATION.md`
+- Implementation TODO: `TODO.md`
 - Flutter Documentation: https://docs.flutter.dev/
 - Material Design 3: https://m3.material.io/
+- Freezed Documentation: https://pub.dev/packages/freezed
+- Riverpod Documentation: https://riverpod.dev/
 
 ## Notes for Future Development
 
