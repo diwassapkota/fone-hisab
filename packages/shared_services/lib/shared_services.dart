@@ -11,6 +11,12 @@ export 'api/auth_service.dart';
 export 'api/customer_service.dart';
 export 'api/transaction_service.dart';
 
+// Supplier & Inventory Services
+export 'api/supplier_service.dart';
+export 'api/product_service.dart';
+export 'api/purchase_service.dart';
+export 'api/analytics_service.dart';
+
 // Interceptors
 export 'interceptors/auth_interceptor.dart';
 export 'interceptors/logging_interceptor.dart';
