@@ -60,6 +60,71 @@ final recentTransactionsProvider = FutureProvider.autoDispose<List<Transaction>>
   }
 });
 
+// Complete dashboard analytics (inventory + supplier + customer metrics)
+final dashboardAnalyticsProvider = FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
+  final analyticsService = ref.watch(analyticsServiceProvider);
+
+  final response = await analyticsService.getDashboardAnalytics();
+
+  if (response.success && response.data != null) {
+    return response.data!;
+  } else {
+    throw Exception(response.error?.message ?? 'Failed to load analytics');
+  }
+});
+
+// Inventory analytics provider
+final inventoryAnalyticsProvider = FutureProvider.autoDispose<InventoryAnalytics>((ref) async {
+  final analyticsService = ref.watch(analyticsServiceProvider);
+
+  final response = await analyticsService.getInventoryAnalytics();
+
+  if (response.success && response.data != null) {
+    return response.data!;
+  } else {
+    throw Exception(response.error?.message ?? 'Failed to load inventory analytics');
+  }
+});
+
+// Supplier analytics provider
+final supplierAnalyticsProvider = FutureProvider.autoDispose<SupplierAnalytics>((ref) async {
+  final analyticsService = ref.watch(analyticsServiceProvider);
+
+  final response = await analyticsService.getSupplierAnalytics();
+
+  if (response.success && response.data != null) {
+    return response.data!;
+  } else {
+    throw Exception(response.error?.message ?? 'Failed to load supplier analytics');
+  }
+});
+
+// Reorder suggestions provider (low stock alerts)
+final reorderSuggestionsProvider = FutureProvider.autoDispose<List<ReorderSuggestion>>((ref) async {
+  final analyticsService = ref.watch(analyticsServiceProvider);
+
+  final response = await analyticsService.getReorderSuggestions();
+
+  if (response.success && response.data != null) {
+    return response.data!;
+  } else {
+    return [];
+  }
+});
+
+// Top selling products provider
+final topSellingProductsProvider = FutureProvider.autoDispose<List<Map<String, dynamic>>>((ref) async {
+  final analyticsService = ref.watch(analyticsServiceProvider);
+
+  final response = await analyticsService.getTopSellingProducts(limit: 10);
+
+  if (response.success && response.data != null) {
+    return response.data!;
+  } else {
+    return [];
+  }
+});
+
 // Dashboard Summary Model
 class DashboardSummary {
   final int totalCustomers;

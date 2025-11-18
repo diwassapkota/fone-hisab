@@ -43,6 +43,30 @@ final transactionServiceProvider = Provider<TransactionService>((ref) {
   return TransactionService(dioClient);
 });
 
+// Supplier Service Provider
+final supplierServiceProvider = Provider<SupplierService>((ref) {
+  final dioClient = ref.watch(dioClientProvider);
+  return SupplierService(dioClient);
+});
+
+// Product Service Provider
+final productServiceProvider = Provider<ProductService>((ref) {
+  final dioClient = ref.watch(dioClientProvider);
+  return ProductService(dioClient);
+});
+
+// Purchase Service Provider
+final purchaseServiceProvider = Provider<PurchaseService>((ref) {
+  final dioClient = ref.watch(dioClientProvider);
+  return PurchaseService(dioClient);
+});
+
+// Analytics Service Provider
+final analyticsServiceProvider = Provider<AnalyticsService>((ref) {
+  final dioClient = ref.watch(dioClientProvider);
+  return AnalyticsService(dioClient);
+});
+
 // Auth Token Provider (stores current JWT token)
 final authTokenProvider = StateProvider<String?>((ref) => null);
 
