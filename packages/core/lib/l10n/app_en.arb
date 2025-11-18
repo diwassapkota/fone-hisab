@@ -1,0 +1,121 @@
+{
+  "@@locale": "en",
+
+  "appName": "Fonepay Khata Book",
+  "merchantAppName": "Fonepay Business",
+  "customerAppName": "Fonepay",
+
+  "dashboard": "Dashboard",
+  "customers": "Customers",
+  "merchants": "Merchants",
+  "reports": "Reports",
+  "settings": "Settings",
+  "ledger": "Ledger",
+  "purchases": "Purchases",
+  "inventory": "Inventory",
+
+  "allCustomers": "All Customers",
+  "allMerchants": "All Merchants",
+  "khataEntries": "Khata Entries",
+
+  "all": "All",
+  "udharo": "Udharo",
+  "advance": "Advance",
+
+  "salesEntry": "Sales Entry",
+  "paymentReceived": "Payment Received",
+  "paymentMade": "Payment Made",
+  "billAmount": "Bill Amount",
+  "saleAmount": "Sale Amount",
+  "balance": "Balance",
+
+  "customerName": "Customer Name",
+  "merchantName": "Merchant Name",
+  "mobileNumber": "Mobile Number",
+  "emailAddress": "Email Address",
+  "address": "Address",
+  "description": "Description",
+
+  "totalBalance": "Total Balance",
+  "todaysSales": "Today's Sales",
+  "openingBalance": "Opening Balance",
+  "salesMade": "Sales Made",
+  "currentBalance": "Current Balance",
+  "dueAmount": "Due Amount",
+  "advanceAmount": "Advance Amount",
+
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "last7Days": "Last 7 Days",
+  "thisMonth": "This Month",
+  "lastMonth": "Last Month",
+  "dateRange": "Date Range",
+  "customRange": "Custom Range",
+
+  "sortBy": "Sort By",
+  "mostRecentEntry": "Most Recent Entry",
+  "nameAtoZ": "Name (A-Z)",
+  "upcomingDueAmount": "Upcoming Due Amount",
+
+  "sendPaymentRequest": "Send Payment Request",
+  "raiseDispute": "Raise Dispute",
+  "viewBillImage": "View Bill Image",
+  "addBill": "Add Bill",
+
+  "generateReport": "Generate Report",
+  "downloadKhataReport": "Download Khata Report",
+  "customerReport": "Customer Report",
+  "merchantReport": "Merchant Report",
+
+  "contactDetails": "Contact Details",
+  "deleteCustomer": "Delete Customer",
+  "settleNow": "Settle Now",
+
+  "notifications": "Notifications",
+  "notificationSettings": "Notification Settings",
+  "changeLanguage": "Change Language",
+  "howToUseKhata": "How to use Khata",
+  "faqs": "FAQs",
+
+  "search": "Search",
+  "searchCustomers": "Search Customers",
+  "searchMerchants": "Search Merchants",
+
+  "cashSale": "Cash Sale",
+  "creditSale": "Credit Sale",
+  "credit": "Credit",
+  "payment": "Payment",
+
+  "proceed": "Proceed",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit",
+  "create": "Create",
+  "view": "View",
+  "share": "Share",
+
+  "welcomeBack": "Welcome Back",
+  "recentTransactions": "Recent Transactions",
+  "viewAll": "View All",
+
+  "rs": "₹",
+  "npr": "NPR",
+
+  "english": "English",
+  "nepali": "नेपाली",
+
+  "disputeRaised": "Dispute Raised",
+  "disputeResolved": "Dispute Resolved",
+  "pendingDisputes": "Pending Disputes",
+
+  "noCustomersFound": "No customers found",
+  "noMerchantsFound": "No merchants found",
+  "noTransactionsFound": "No transactions found",
+  "noDataAvailable": "No data available",
+
+  "login": "Login",
+  "register": "Register",
+  "phoneNumber": "Phone Number",
+  "appSubtitle": "Digital Khata Book for your business"
+}

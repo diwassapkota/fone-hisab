@@ -1,0 +1,48 @@
+name: fonepay_khata_book
+
+packages:
+  - apps/**
+  - packages/**
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  analyze:
+    run: melos exec -- flutter analyze
+    description: Run Flutter analyze for all packages
+
+  format:
+    run: melos exec -- dart format lib test
+    description: Format all packages
+
+  test:
+    run: melos exec -- flutter test --no-pub --coverage
+    description: Run all Flutter tests
+
+  build:merchant:
+    run: flutter build apk
+    exec:
+      concurrency: 1
+    packageFilters:
+      dirExists: android
+      scope: merchant_app
+    description: Build merchant app APK
+
+  build:customer:
+    run: flutter build apk
+    exec:
+      concurrency: 1
+    packageFilters:
+      dirExists: android
+      scope: customer_app
+    description: Build customer app APK
+
+  clean:
+    run: melos exec -- flutter clean
+    description: Clean all packages
+
+  get:
+    run: melos exec -- flutter pub get
+    description: Get dependencies for all packages

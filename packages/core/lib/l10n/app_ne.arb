@@ -1,0 +1,121 @@
+{
+  "@@locale": "ne",
+
+  "appName": "फोनपे खाता बुक",
+  "merchantAppName": "फोनपे बिजनेस",
+  "customerAppName": "फोनपे",
+
+  "dashboard": "ड्यासबोर्ड",
+  "customers": "ग्राहकहरू",
+  "merchants": "व्यापारीहरू",
+  "reports": "रिपोर्टहरू",
+  "settings": "सेटिङहरू",
+  "ledger": "खाता",
+  "purchases": "खरिद",
+  "inventory": "सूची",
+
+  "allCustomers": "सबै ग्राहकहरू",
+  "allMerchants": "सबै व्यापारीहरू",
+  "khataEntries": "खाता प्रविष्टिहरू",
+
+  "all": "सबै",
+  "udharo": "उधारो",
+  "advance": "अग्रिम",
+
+  "salesEntry": "बिक्री प्रविष्टि",
+  "paymentReceived": "भुक्तानी प्राप्त",
+  "paymentMade": "भुक्तानी गरियो",
+  "billAmount": "बिलको रकम",
+  "saleAmount": "बिक्री रकम",
+  "balance": "बाँकी",
+
+  "customerName": "ग्राहकको नाम",
+  "merchantName": "व्यापारीको नाम",
+  "mobileNumber": "मोबाइल नम्बर",
+  "emailAddress": "इमेल ठेगाना",
+  "address": "ठेगाना",
+  "description": "विवरण",
+
+  "totalBalance": "कुल बाँकी",
+  "todaysSales": "आजको बिक्री",
+  "openingBalance": "सुरुको बाँकी",
+  "salesMade": "बिक्री भएको",
+  "currentBalance": "हालको बाँकी",
+  "dueAmount": "बाँकी रकम",
+  "advanceAmount": "अग्रिम रकम",
+
+  "today": "आज",
+  "yesterday": "हिजो",
+  "last7Days": "अन्तिम ७ दिन",
+  "thisMonth": "यो महिना",
+  "lastMonth": "गत महिना",
+  "dateRange": "मिति दायरा",
+  "customRange": "कस्टम दायरा",
+
+  "sortBy": "क्रमबद्ध गर्नुहोस्",
+  "mostRecentEntry": "पछिल्लो प्रविष्टि",
+  "nameAtoZ": "नाम (क-ज्ञ)",
+  "upcomingDueAmount": "आउँदो बाँकी रकम",
+
+  "sendPaymentRequest": "भुक्तानी अनुरोध पठाउनुहोस्",
+  "raiseDispute": "विवाद उठाउनुहोस्",
+  "viewBillImage": "बिल छवि हेर्नुहोस्",
+  "addBill": "बिल थप्नुहोस्",
+
+  "generateReport": "रिपोर्ट बनाउनुहोस्",
+  "downloadKhataReport": "खाता रिपोर्ट डाउनलोड गर्नुहोस्",
+  "customerReport": "ग्राहक रिपोर्ट",
+  "merchantReport": "व्यापारी रिपोर्ट",
+
+  "contactDetails": "सम्पर्क विवरण",
+  "deleteCustomer": "ग्राहक मेटाउनुहोस्",
+  "settleNow": "अहिले समाधान गर्नुहोस्",
+
+  "notifications": "सूचनाहरू",
+  "notificationSettings": "सूचना सेटिङहरू",
+  "changeLanguage": "भाषा परिवर्तन गर्नुहोस्",
+  "howToUseKhata": "खाता कसरी प्रयोग गर्ने",
+  "faqs": "सामान्य प्रश्नहरू",
+
+  "search": "खोज्नुहोस्",
+  "searchCustomers": "ग्राहकहरू खोज्नुहोस्",
+  "searchMerchants": "व्यापारीहरू खोज्नुहोस्",
+
+  "cashSale": "नगद बिक्री",
+  "creditSale": "उधारो बिक्री",
+  "credit": "उधारो",
+  "payment": "भुक्तानी",
+
+  "proceed": "अगाडि बढ्नुहोस्",
+  "cancel": "रद्द गर्नुहोस्",
+  "save": "सुरक्षित गर्नुहोस्",
+  "delete": "मेटाउनुहोस्",
+  "edit": "सम्पादन गर्नुहोस्",
+  "create": "बनाउनुहोस्",
+  "view": "हेर्नुहोस्",
+  "share": "साझेदारी गर्नुहोस्",
+
+  "welcomeBack": "फेरि स्वागत छ",
+  "recentTransactions": "हालका लेनदेनहरू",
+  "viewAll": "सबै हेर्नुहोस्",
+
+  "rs": "रु",
+  "npr": "नेरु",
+
+  "english": "English",
+  "nepali": "नेपाली",
+
+  "disputeRaised": "विवाद उठाइएको",
+  "disputeResolved": "विवाद समाधान भयो",
+  "pendingDisputes": "बाँकी विवादहरू",
+
+  "noCustomersFound": "कुनै ग्राहक फेला परेन",
+  "noMerchantsFound": "कुनै व्यापारी फेला परेन",
+  "noTransactionsFound": "कुनै लेनदेन फेला परेन",
+  "noDataAvailable": "कुनै डेटा उपलब्ध छैन",
+
+  "login": "लगइन",
+  "register": "दर्ता गर्नुहोस्",
+  "phoneNumber": "फोन नम्बर",
+  "appSubtitle": "तपाईंको व्यवसायको लागि डिजिटल खाता बुक"
+}
