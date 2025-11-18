@@ -20,17 +20,18 @@
 
 | File | Status | Description |
 |------|--------|-------------|
-| `stock_status.dart` | ⏳ | IN_STOCK, LOW_STOCK, OUT_OF_STOCK, NOT_TRACKED |
-| `balance_type.dart` | ⏳ | UDHARO, ADVANCE, SETTLED (can reuse for suppliers) |
-| `purchase_transaction_type.dart` | ⏳ | PURCHASE, PAYMENT |
-| `adjustment_type.dart` | ⏳ | ADD, REMOVE (for stock adjustments) |
-| `supplier_sort_by.dart` | ⏳ | RECENT, NAME_ASC, NAME_DESC, BALANCE_HIGH, BALANCE_LOW |
-| `product_sort_by.dart` | ⏳ | RECENT, NAME_ASC, PRICE_LOW, PRICE_HIGH, STOCK_LOW, STOCK_HIGH |
-| `payment_mode.dart` | ⏳ | CASH, DIGITAL, BANK_TRANSFER, CHEQUE (shared enum) |
+| `stock_status.dart` | ✅ | IN_STOCK, LOW_STOCK, OUT_OF_STOCK, NOT_TRACKED |
+| `balance_type.dart` | ✅ | UDHARO, ADVANCE, SETTLED (shared for customers & suppliers) |
+| `purchase_transaction_type.dart` | ✅ | PURCHASE, PAYMENT |
+| `adjustment_type.dart` | ✅ | ADD, REMOVE (for stock adjustments) |
+| `supplier_sort_by.dart` | ✅ | RECENT, NAME_ASC, NAME_DESC, BALANCE_HIGH, BALANCE_LOW |
+| `product_sort_by.dart` | ✅ | RECENT, NAME_ASC, PRICE_LOW, PRICE_HIGH, STOCK_LOW, STOCK_HIGH |
+| `payment_mode.dart` | ✅ | CASH, DIGITAL, BANK_TRANSFER, CHEQUE, OTHER |
 
 **Notes:**
-- Follow pattern from existing enums (customer_filter.dart, transaction_type.dart, dispute_status.dart)
-- Use uppercase for enum values
+- ✅ Followed pattern from existing enums (customer_filter.dart, transaction_type.dart, dispute_status.dart)
+- ✅ Used uppercase for enum values
+- ✅ Added helper methods: `fromString()`, `displayName`, color/icon indicators
 
 ---
 
