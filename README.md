@@ -15,6 +15,12 @@ Fonepay Khata Book consists of two Flutter applications:
 - 📊 Digital sales entry (Cash/Credit/Advance)
 - 👥 Customer management with ledger tracking
 - 💰 Credit and advance payment tracking
+- 📦 **Supplier management** (🚧 In Progress)
+- 📦 **Inventory tracking with stock management** (🚧 In Progress)
+- 🛒 **Purchase recording with itemized entries** (🚧 In Progress)
+- 💵 **Supplier payment tracking** (🚧 In Progress)
+- 📊 **Dashboard analytics** (inventory value, supplier payables)
+- 🔔 **Low stock alerts and reorder suggestions** (🚧 In Progress)
 - 📈 Transaction reports (PDF/Excel)
 - 🔔 Payment reminders
 - 🌓 Dark mode support

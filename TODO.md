@@ -298,22 +298,40 @@ class Purchase with _$Purchase {
 
 ---
 
-## Phase 4: UI Screens
+## Phase 4: UI Screens (🚧 IN PROGRESS - 37% Complete)
 
 ### 4.1 Supplier Management (`apps/merchant_app/lib/features/suppliers/`)
 
 #### Screens
 | File | Status | Description |
 |------|--------|-------------|
-| `screens/supplier_list_screen.dart` | ⏳ | List with filters, search, sort |
-| `screens/supplier_detail_screen.dart` | ⏳ | Details, ledger, purchase history |
+| `screens/supplier_list_screen.dart` | ✅ | List with filters (ALL/PAYABLE/ADVANCE/SETTLED), search, summary cards |
+| `screens/supplier_detail_screen.dart` | ✅ | Details, ledger, purchase history with SliverAppBar |
 | `screens/supplier_form_screen.dart` | ⏳ | Add/Edit supplier form |
+
+**Implementation Details (Completed):**
+- ✅ supplier_list_screen.dart:
+  - Search with 300ms debouncing
+  - Filter chips: ALL, PAYABLE, ADVANCE, SETTLED
+  - Summary cards showing total payables/advances
+  - Supplier cards with balance badges
+  - Overdue payment indicators
+  - Pull-to-refresh support
+  - Empty and error states
+
+- ✅ supplier_detail_screen.dart:
+  - CustomScrollView with gradient SliverAppBar
+  - Balance card with due date indicators
+  - Action buttons: Add Purchase, Make Payment, Share
+  - Purchase summary card (totals, transaction count)
+  - Purchase history ledger
+  - Type-based color coding (PURCHASE vs PAYMENT)
 
 #### Widgets (Optional)
 | File | Status | Description |
 |------|--------|-------------|
-| `widgets/supplier_card.dart` | ⏳ | Reusable supplier list item |
-| `widgets/supplier_filter_chips.dart` | ⏳ | Filter chips for All/Payable/Advance |
+| `widgets/supplier_card.dart` | ✅ | Embedded in list screen |
+| `widgets/supplier_filter_chips.dart` | ✅ | Embedded in list screen |
 
 ---
 
@@ -322,19 +340,30 @@ class Purchase with _$Purchase {
 #### Screens
 | File | Status | Description |
 |------|--------|-------------|
-| `screens/product_list_screen.dart` | ⏳ | Product catalog with filters |
+| `screens/product_list_screen.dart` | ✅ | Product catalog with stock status filters, search |
 | `screens/product_detail_screen.dart` | ⏳ | Product details, stock history |
 | `screens/product_form_screen.dart` | ⏳ | Add/Edit product form |
 | `screens/stock_adjustment_screen.dart` | ⏳ | Manual stock adjustments |
 | `screens/low_stock_screen.dart` | ⏳ | Low stock alerts with reorder suggestions |
 | `screens/category_list_screen.dart` | ⏳ | Browse products by category |
 
+**Implementation Details (Completed):**
+- ✅ product_list_screen.dart:
+  - Search with 300ms debouncing
+  - Stock status filter chips: ALL, IN_STOCK, LOW_STOCK, OUT_OF_STOCK
+  - Product cards with images (network with error fallback)
+  - Cost price and selling price display
+  - Category display
+  - Color-coded stock badges (green/yellow/red)
+  - FAB for low stock alerts
+  - Pull-to-refresh, empty/error states
+
 #### Widgets (Optional)
 | File | Status | Description |
 |------|--------|-------------|
-| `widgets/product_card.dart` | ⏳ | Product list item with stock badge |
+| `widgets/product_card.dart` | ✅ | Embedded in list screen |
 | `widgets/product_picker.dart` | ⏳ | Product selection widget for sales/purchases |
-| `widgets/stock_badge.dart` | ⏳ | Stock status indicator (IN_STOCK/LOW/OUT) |
+| `widgets/stock_badge.dart` | ✅ | Embedded in product card |
 
 ---
 
