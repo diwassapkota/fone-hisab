@@ -7,6 +7,23 @@ import '../../../config/providers.dart';
 import '../providers/purchase_form_providers.dart';
 import '../../suppliers/providers/supplier_providers.dart';
 
+// Local class for displaying purchase items with names
+class _DisplayPurchaseItem {
+  final String productId;
+  final String productName;
+  final int quantity;
+  final double unitPrice;
+
+  _DisplayPurchaseItem({
+    required this.productId,
+    required this.productName,
+    required this.quantity,
+    required this.unitPrice,
+  });
+
+  double get total => quantity * unitPrice;
+}
+
 class PurchaseEntryScreen extends ConsumerStatefulWidget {
   final String? supplierId;
 
@@ -28,6 +45,7 @@ class _PurchaseEntryScreenState extends ConsumerState<PurchaseEntryScreen> {
   bool _isLoading = false;
   DateTime _selectedDate = DateTime.now();
   String _paymentMode = 'CASH';
+  final List<_DisplayPurchaseItem> _displayItems = [];
 
   @override
   void initState() {
@@ -218,7 +236,7 @@ class _PurchaseEntryScreenState extends ConsumerState<PurchaseEntryScreen> {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    if (formState.items.isEmpty)
+                    if (_displayItems.isEmpty)
                       const Center(
                         child: Padding(
                           padding: EdgeInsets.all(20.0),
@@ -226,24 +244,27 @@ class _PurchaseEntryScreenState extends ConsumerState<PurchaseEntryScreen> {
                         ),
                       )
                     else
-                      ...formState.items.asMap().entries.map((entry) {
+                      ..._displayItems.asMap().entries.map((entry) {
                         final index = entry.key;
                         final item = entry.value;
                         return ListTile(
-                          title: Text(item.productName ?? 'Product'),
+                          title: Text(item.productName),
                           subtitle: Text(
-                            '${item.quantity} × Rs. ${item.unitCost.toStringAsFixed(2)}',
+                            '${item.quantity} × Rs. ${item.unitPrice.toStringAsFixed(2)}',
                           ),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'Rs. ${(item.quantity * item.unitCost).toStringAsFixed(2)}',
+                                'Rs. ${item.total.toStringAsFixed(2)}',
                                 style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
                               IconButton(
                                 icon: const Icon(Icons.delete, color: Colors.red),
                                 onPressed: () {
+                                  setState(() {
+                                    _displayItems.removeAt(index);
+                                  });
                                   ref.read(purchaseFormProvider.notifier).removeItem(index);
                                 },
                               ),
@@ -431,11 +452,29 @@ class _PurchaseEntryScreenState extends ConsumerState<PurchaseEntryScreen> {
           ),
           ElevatedButton(
             onPressed: () {
+              final productName = nameController.text;
+              final quantity = int.tryParse(quantityController.text) ?? 0;
+              final unitPrice = double.tryParse(costController.text) ?? 0.0;
+
+              // Create a temporary product ID (in real implementation, this would come from product selection)
+              final tempProductId = 'temp_${DateTime.now().millisecondsSinceEpoch}';
+
               final item = PurchaseItemRequest(
-                productName: nameController.text,
-                quantity: int.tryParse(quantityController.text) ?? 0,
-                unitCost: double.tryParse(costController.text) ?? 0.0,
+                productId: tempProductId,
+                quantity: quantity,
+                unitPrice: unitPrice,
               );
+
+              // Add to display items
+              setState(() {
+                _displayItems.add(_DisplayPurchaseItem(
+                  productId: tempProductId,
+                  productName: productName,
+                  quantity: quantity,
+                  unitPrice: unitPrice,
+                ));
+              });
+
               ref.read(purchaseFormProvider.notifier).addItem(item);
               Navigator.pop(context);
             },

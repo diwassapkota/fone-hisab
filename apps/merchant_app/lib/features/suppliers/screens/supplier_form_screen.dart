@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:core/core.dart';
-import 'package:shared_models/shared_models.dart';
 import '../../../config/providers.dart';
-import '../providers/supplier_providers.dart';
 import '../providers/supplier_detail_providers.dart';
 
 class SupplierFormScreen extends ConsumerStatefulWidget {
@@ -71,24 +69,47 @@ class _SupplierFormScreenState extends ConsumerState<SupplierFormScreen> {
 
     try {
       final supplierService = ref.read(supplierServiceProvider);
-      final data = {
-        'supplierName': _nameController.text.trim(),
-        'mobileNumber': _mobileController.text.trim(),
-        if (_emailController.text.isNotEmpty)
-          'email': _emailController.text.trim(),
-        if (_addressController.text.isNotEmpty)
-          'address': _addressController.text.trim(),
-        if (_panController.text.isNotEmpty)
-          'panNumber': _panController.text.trim(),
-        if (_gstController.text.isNotEmpty)
-          'gstNumber': _gstController.text.trim(),
-        if (_notesController.text.isNotEmpty)
-          'notes': _notesController.text.trim(),
-      };
 
       final response = _isEditMode
-          ? await supplierService.updateSupplier(widget.supplierId!, data)
-          : await supplierService.createSupplier(data);
+          ? await supplierService.updateSupplier(
+              supplierId: widget.supplierId!,
+              supplierName: _nameController.text.trim(),
+              mobileNumber: _mobileController.text.trim(),
+              email: _emailController.text.isNotEmpty
+                  ? _emailController.text.trim()
+                  : null,
+              address: _addressController.text.isNotEmpty
+                  ? _addressController.text.trim()
+                  : null,
+              panNumber: _panController.text.isNotEmpty
+                  ? _panController.text.trim()
+                  : null,
+              gstNumber: _gstController.text.isNotEmpty
+                  ? _gstController.text.trim()
+                  : null,
+              notes: _notesController.text.isNotEmpty
+                  ? _notesController.text.trim()
+                  : null,
+            )
+          : await supplierService.createSupplier(
+              supplierName: _nameController.text.trim(),
+              mobileNumber: _mobileController.text.trim(),
+              email: _emailController.text.isNotEmpty
+                  ? _emailController.text.trim()
+                  : null,
+              address: _addressController.text.isNotEmpty
+                  ? _addressController.text.trim()
+                  : null,
+              panNumber: _panController.text.isNotEmpty
+                  ? _panController.text.trim()
+                  : null,
+              gstNumber: _gstController.text.isNotEmpty
+                  ? _gstController.text.trim()
+                  : null,
+              notes: _notesController.text.isNotEmpty
+                  ? _notesController.text.trim()
+                  : null,
+            );
 
       if (!mounted) return;
 

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:core/core.dart';
-import 'package:shared_models/shared_models.dart';
 import '../../../config/providers.dart';
-import '../providers/product_providers.dart';
 import '../providers/product_detail_providers.dart';
 
 class ProductFormScreen extends ConsumerStatefulWidget {
@@ -84,28 +82,55 @@ class _ProductFormScreenState extends ConsumerState<ProductFormScreen> {
 
     try {
       final productService = ref.read(productServiceProvider);
-      final data = {
-        'productName': _nameController.text.trim(),
-        if (_descriptionController.text.isNotEmpty)
-          'description': _descriptionController.text.trim(),
-        if (_categoryController.text.isNotEmpty)
-          'category': _categoryController.text.trim(),
-        if (_skuController.text.isNotEmpty) 'sku': _skuController.text.trim(),
-        if (_barcodeController.text.isNotEmpty)
-          'barcode': _barcodeController.text.trim(),
-        'costPrice': double.parse(_costPriceController.text),
-        'sellingPrice': double.parse(_sellingPriceController.text),
-        'trackInventory': _trackInventory,
-        if (_trackInventory) ...[
-          'stockQuantity': int.parse(_stockQuantityController.text),
-          'minStockLevel': int.parse(_minStockLevelController.text),
-        ],
-        'unit': _unitController.text.trim(),
-      };
 
       final response = _isEditMode
-          ? await productService.updateProduct(widget.productId!, data)
-          : await productService.createProduct(data);
+          ? await productService.updateProduct(
+              productId: widget.productId!,
+              productName: _nameController.text.trim(),
+              description: _descriptionController.text.isNotEmpty
+                  ? _descriptionController.text.trim()
+                  : null,
+              category: _categoryController.text.isNotEmpty
+                  ? _categoryController.text.trim()
+                  : null,
+              sku: _skuController.text.isNotEmpty
+                  ? _skuController.text.trim()
+                  : null,
+              barcode: _barcodeController.text.isNotEmpty
+                  ? _barcodeController.text.trim()
+                  : null,
+              costPrice: double.parse(_costPriceController.text),
+              sellingPrice: double.parse(_sellingPriceController.text),
+              minStockLevel: _trackInventory
+                  ? int.parse(_minStockLevelController.text)
+                  : null,
+              unit: _unitController.text.trim(),
+            )
+          : await productService.createProduct(
+              productName: _nameController.text.trim(),
+              description: _descriptionController.text.isNotEmpty
+                  ? _descriptionController.text.trim()
+                  : null,
+              category: _categoryController.text.isNotEmpty
+                  ? _categoryController.text.trim()
+                  : null,
+              sku: _skuController.text.isNotEmpty
+                  ? _skuController.text.trim()
+                  : null,
+              barcode: _barcodeController.text.isNotEmpty
+                  ? _barcodeController.text.trim()
+                  : null,
+              costPrice: double.parse(_costPriceController.text),
+              sellingPrice: double.parse(_sellingPriceController.text),
+              trackInventory: _trackInventory,
+              stockQuantity: _trackInventory
+                  ? int.parse(_stockQuantityController.text)
+                  : 0,
+              minStockLevel: _trackInventory
+                  ? int.parse(_minStockLevelController.text)
+                  : 0,
+              unit: _unitController.text.trim(),
+            );
 
       if (!mounted) return;
 

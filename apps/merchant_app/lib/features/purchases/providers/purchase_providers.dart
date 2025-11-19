@@ -39,7 +39,6 @@ final purchasesProvider = FutureProvider.autoDispose<Map<String, dynamic>>((ref)
 
   final response = await purchaseService.getPurchases(
     supplierId: supplierFilter,
-    type: typeFilter,
     startDate: dateRange.startDate,
     endDate: dateRange.endDate,
   );

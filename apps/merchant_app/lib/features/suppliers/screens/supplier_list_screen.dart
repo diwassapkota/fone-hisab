@@ -83,8 +83,8 @@ class _SupplierListScreenState extends ConsumerState<SupplierListScreen> {
                   Expanded(
                     child: _SummaryCard(
                       title: 'Total Payable',
-                      amount: 'Rs. ${summary.totalPayable.toStringAsFixed(0)}',
-                      count: '${summary.payableCount} suppliers',
+                      amount: 'Rs. ${summary.totalPayableAmount.toStringAsFixed(0)}',
+                      count: '${summary.payableSuppliers} suppliers',
                       color: AppColors.creditRed,
                     ),
                   ),
@@ -92,8 +92,8 @@ class _SupplierListScreenState extends ConsumerState<SupplierListScreen> {
                   Expanded(
                     child: _SummaryCard(
                       title: 'Total Advance',
-                      amount: 'Rs. ${summary.totalAdvance.toStringAsFixed(0)}',
-                      count: '${summary.advanceCount} suppliers',
+                      amount: 'Rs. ${summary.totalAdvanceAmount.toStringAsFixed(0)}',
+                      count: '${summary.advanceSuppliers} suppliers',
                       color: AppColors.debitGreen,
                     ),
                   ),

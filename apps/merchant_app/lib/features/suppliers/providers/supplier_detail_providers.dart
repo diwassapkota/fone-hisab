@@ -54,9 +54,8 @@ final supplierPurchasesProvider =
 
   final response = await purchaseService.getSupplierLedger(
     supplierId: supplierId,
-    type: filter.type,
-    startDate: filter.startDate,
-    endDate: filter.endDate,
+    startDate: filter.startDate ?? '',
+    endDate: filter.endDate ?? '',
   );
 
   if (response.success && response.data != null) {

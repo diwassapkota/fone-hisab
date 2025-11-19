@@ -12,6 +12,14 @@ import '../features/reports/screens/reports_screen.dart';
 import '../features/settings/screens/settings_screen.dart';
 import '../features/notifications/screens/notifications_screen.dart';
 import '../features/calculator/screens/calculator_screen.dart';
+import '../features/products/screens/product_list_screen.dart';
+import '../features/products/screens/product_detail_screen.dart';
+import '../features/products/screens/product_form_screen.dart';
+import '../features/suppliers/screens/supplier_list_screen.dart';
+import '../features/suppliers/screens/supplier_detail_screen.dart';
+import '../features/suppliers/screens/supplier_form_screen.dart';
+import '../features/purchases/screens/purchase_list_screen.dart';
+import '../features/purchases/screens/purchase_entry_screen.dart';
 
 class AppRouter {
   static const String login = '/';
@@ -27,6 +35,20 @@ class AppRouter {
   static const String settings = '/settings';
   static const String notifications = '/notifications';
   static const String calculator = '/calculator';
+
+  // Products
+  static const String productList = '/products';
+  static const String productDetail = '/products/:id';
+  static const String productForm = '/product-form';
+
+  // Suppliers
+  static const String supplierList = '/suppliers';
+  static const String supplierDetail = '/suppliers/:id';
+  static const String supplierForm = '/supplier-form';
+
+  // Purchases
+  static const String purchaseList = '/purchases';
+  static const String purchaseEntry = '/purchase-entry';
 
   static final GoRouter router = GoRouter(
     initialLocation: login,
@@ -114,6 +136,64 @@ class AppRouter {
         path: calculator,
         name: 'calculator',
         builder: (context, state) => const QuickCalculatorScreen(),
+      ),
+      // Products
+      GoRoute(
+        path: productList,
+        name: 'productList',
+        builder: (context, state) => const ProductListScreen(),
+      ),
+      GoRoute(
+        path: productDetail,
+        name: 'productDetail',
+        builder: (context, state) {
+          final productId = state.pathParameters['id'] ?? '';
+          return ProductDetailScreen(productId: productId);
+        },
+      ),
+      GoRoute(
+        path: productForm,
+        name: 'productForm',
+        builder: (context, state) {
+          final productId = state.uri.queryParameters['productId'];
+          return ProductFormScreen(productId: productId);
+        },
+      ),
+      // Suppliers
+      GoRoute(
+        path: supplierList,
+        name: 'supplierList',
+        builder: (context, state) => const SupplierListScreen(),
+      ),
+      GoRoute(
+        path: supplierDetail,
+        name: 'supplierDetail',
+        builder: (context, state) {
+          final supplierId = state.pathParameters['id'] ?? '';
+          return SupplierDetailScreen(supplierId: supplierId);
+        },
+      ),
+      GoRoute(
+        path: supplierForm,
+        name: 'supplierForm',
+        builder: (context, state) {
+          final supplierId = state.uri.queryParameters['supplierId'];
+          return SupplierFormScreen(supplierId: supplierId);
+        },
+      ),
+      // Purchases
+      GoRoute(
+        path: purchaseList,
+        name: 'purchaseList',
+        builder: (context, state) => const PurchaseListScreen(),
+      ),
+      GoRoute(
+        path: purchaseEntry,
+        name: 'purchaseEntry',
+        builder: (context, state) {
+          final supplierId = state.uri.queryParameters['supplierId'];
+          return PurchaseEntryScreen(supplierId: supplierId);
+        },
       ),
     ],
   );

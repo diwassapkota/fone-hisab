@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:core/core.dart';
 import 'package:shared_models/shared_models.dart';
 import '../providers/product_detail_providers.dart';
-import '../providers/product_providers.dart';
 
 class ProductDetailScreen extends ConsumerWidget {
   final String productId;

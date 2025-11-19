@@ -129,7 +129,7 @@ class PurchaseFormNotifier extends StateNotifier<PurchaseFormState> {
     // Recalculate purchase amount based on items
     final total = items.fold<double>(
       0.0,
-      (sum, item) => sum + (item.unitCost * item.quantity),
+      (sum, item) => sum + (item.unitPrice * item.quantity),
     );
     state = state.copyWith(purchaseAmount: total);
   }

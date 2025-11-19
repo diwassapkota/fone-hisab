@@ -6,7 +6,7 @@ part 'supplier.g.dart';
 @freezed
 class Supplier with _$Supplier {
   const factory Supplier({
-    required String supplierId,
+    @JsonKey(name: 'id') required String supplierId,
     required String supplierName,
     required String mobileNumber,
     String? email,
@@ -19,7 +19,7 @@ class Supplier with _$Supplier {
     @Default(0) int purchaseCount,
     DateTime? lastPurchaseDate,
     DateTime? dueDate,
-    required DateTime createdAt,
+    DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Supplier;
 

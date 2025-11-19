@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:core/core.dart';
 import 'package:shared_models/shared_models.dart';
 import '../../customers/screens/customer_list_screen.dart';
-import '../../settings/screens/settings_screen.dart';
 import '../../reports/screens/reports_screen.dart';
+import '../../more/screens/more_screen.dart';
 import '../providers/dashboard_providers.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -22,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     const _HomePage(),
     const CustomerListScreen(),
     const ReportsScreen(),
-    const SettingsScreen(),
+    const MoreScreen(),
   ];
 
   @override
@@ -65,9 +65,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon: const Icon(Icons.assessment),
             label: l10n.reports,
           ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.settings),
-            label: l10n.settings,
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.apps),
+            label: 'More',
           ),
         ],
       ),
@@ -153,6 +153,44 @@ class _DashboardScreenState extends State<DashboardScreen> {
               onTap: () {
                 Navigator.pop(context);
                 context.pushNamed('paymentEntry');
+              },
+            ),
+            const SizedBox(height: 8),
+            const Divider(),
+            const SizedBox(height: 8),
+            ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.advanceYellow.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.shopping_bag, color: AppColors.advanceYellow),
+              ),
+              title: const Text('Purchase Entry'),
+              subtitle: const Text('Record supplier purchase'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pop(context);
+                context.pushNamed('purchaseEntry');
+              },
+            ),
+            const SizedBox(height: 8),
+            ListTile(
+              leading: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: AppColors.info.withValues(alpha: 0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(Icons.inventory_2, color: AppColors.info),
+              ),
+              title: const Text('Add Product'),
+              subtitle: const Text('Add item to inventory'),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 16),
+              onTap: () {
+                Navigator.pop(context);
+                context.pushNamed('productForm');
               },
             ),
             const SizedBox(height: 16),
@@ -293,6 +331,71 @@ class _HomePage extends ConsumerWidget {
                       ],
                     ),
                   ),
+                ),
+              ),
+              const SizedBox(height: 24),
+
+              // Quick Access Links
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Quick Access',
+                    style: AppTypography.titleMedium.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      // Switch to More tab (index 3)
+                      if (context.mounted) {
+                        final dashboardState = context.findAncestorStateOfType<_DashboardScreenState>();
+                        dashboardState?.setState(() {
+                          dashboardState._selectedIndex = 3;
+                        });
+                      }
+                    },
+                    child: Text(
+                      'View All',
+                      style: AppTypography.bodyMedium.copyWith(
+                        color: AppColors.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                height: 95,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    _QuickAccessCard(
+                      icon: Icons.inventory_2,
+                      label: 'Inventory',
+                      color: AppColors.info,
+                      onTap: () => context.pushNamed('productList'),
+                    ),
+                    _QuickAccessCard(
+                      icon: Icons.store,
+                      label: 'Suppliers',
+                      color: AppColors.creditRed,
+                      onTap: () => context.pushNamed('supplierList'),
+                    ),
+                    _QuickAccessCard(
+                      icon: Icons.shopping_cart,
+                      label: 'Purchases',
+                      color: AppColors.advanceYellow,
+                      onTap: () => context.pushNamed('purchaseList'),
+                    ),
+                    _QuickAccessCard(
+                      icon: Icons.assessment,
+                      label: 'Reports',
+                      color: AppColors.debitGreen,
+                      onTap: () => context.pushNamed('reports'),
+                    ),
+                  ],
                 ),
               ),
               const SizedBox(height: 24),
@@ -539,6 +642,70 @@ class _TransactionItem extends StatelessWidget {
     } else {
       return '${date.day}/${date.month}/${date.year}';
     }
+  }
+}
+
+class _QuickAccessCard extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final Color color;
+  final VoidCallback onTap;
+
+  const _QuickAccessCard({
+    required this.icon,
+    required this.label,
+    required this.color,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 110,
+      margin: const EdgeInsets.only(right: 12),
+      child: Card(
+        elevation: 2,
+        margin: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: color.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Icon(
+                    icon,
+                    color: color,
+                    size: 22,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
+                  label,
+                  style: AppTypography.labelSmall.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 

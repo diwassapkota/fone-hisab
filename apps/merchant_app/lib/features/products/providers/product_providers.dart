@@ -24,7 +24,8 @@ final productsProvider = FutureProvider.autoDispose<Map<String, dynamic>>((ref) 
 
   final response = await productService.getProducts(
     category: category == 'ALL' ? null : category,
-    stockStatus: stockStatus,
+    inStock: stockStatus == 'IN_STOCK' ? true : (stockStatus == 'ALL' ? null : null),
+    lowStock: stockStatus == 'LOW_STOCK' ? true : null,
     search: search,
     sortBy: sortBy,
   );
@@ -68,13 +69,13 @@ final categoriesProvider = FutureProvider.autoDispose<List<Category>>((ref) asyn
 });
 
 // Low stock products provider (for alerts/notifications)
-final lowStockProductsProvider = FutureProvider.autoDispose<List<Product>>((ref) async {
+final lowStockProductsProvider = FutureProvider.autoDispose<Map<String, dynamic>>((ref) async {
   final productService = ref.watch(productServiceProvider);
   final response = await productService.getLowStockProducts();
 
   if (response.success && response.data != null) {
     return response.data!;
   } else {
-    return [];
+    return {};
   }
 });
